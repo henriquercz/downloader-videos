@@ -24,4 +24,4 @@ RUN mkdir -p downloads
 EXPOSE 3001
 
 # Comando de inicialização
-CMD ["node", "src/server.js"]
+CMD ["node", "src/app.js"]
