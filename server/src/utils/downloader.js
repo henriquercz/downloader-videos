@@ -22,7 +22,21 @@ if (!fs.existsSync(DOWNLOAD_DIR)) {
  */
 const getFormats = async (url) => {
     try {
-        const metadata = await ytDlp.getVideoInfo(url);
+        // Flags anti-bloqueio para metadados
+        const args = [
+            url,
+            '--dump-json',
+            '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            '--no-check-certificate',
+            '--geo-bypass'
+        ];
+
+        // YtDlpWrap getVideoInfo é um wrapper simples, vamos usar execPromise para controle total
+        // ou instanciar args se a lib permitir, mas getVideoInfo geralmente aceita apenas args limitados ou string.
+        // Melhor usar o .execPromise com --dump-json manual para garantir as flags.
+
+        const stdout = await ytDlp.execPromise(args);
+        const metadata = JSON.parse(stdout);
         return {
             title: metadata.title,
             thumbnail: metadata.thumbnail,
@@ -55,7 +69,12 @@ const downloadVideo = (url, formatId) => {
         const args = [
             url,
             '-f', formatId || 'best[ext=mp4]',
-            '-o', filepath
+            '-o', filepath,
+            '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+            '--referer', 'https://www.google.com/',
+            '--no-check-certificate',
+            '--prefer-free-formats',
+            '--geo-bypass'
         ];
 
         console.log(`Iniciando download: ${url} -> ${filepath}`);
