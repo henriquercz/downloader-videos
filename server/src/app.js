@@ -9,6 +9,9 @@ const videoRoutes = require('./routes/videoRoutes');
 require('dotenv').config({ path: path.join(__dirname, '../.env') }) || require('dotenv').config();
 
 const app = express();
+// Necessário para o Render/Heroku/Vercel (Behind Proxy) para o Rate Limit funcionar
+app.set('trust proxy', 1);
+
 const PORT = process.env.PORT || 3001;
 
 // Configurações de Segurança e Middleware

@@ -2,10 +2,8 @@
 FROM node:20-alpine
 
 # Instalar dependências de sistema necessárias (Python e ffmpeg para yt-dlp)
-# Instalar dependências de sistema (Python, FFMPEG) e baixar binário yt-dlp
-RUN apk add --no-cache python3 py3-pip ffmpeg curl && \
-    curl -L https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp -o /usr/local/bin/yt-dlp && \
-    chmod a+rx /usr/local/bin/yt-dlp
+# Usaremos API Externa (Cobalt), então não precisamos de Python/FFMPEG locais
+# Isso reduz drasticamente o tamanho da imagem
 
 # Definir diretório de trabalho
 WORKDIR /app
