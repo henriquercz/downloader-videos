@@ -1,0 +1,29 @@
+{
+    "name": "video-downloader-server",
+    "version": "1.0.0",
+    "description": "API Backend para Video Downloader Multi-Platform",
+    "main": "src/app.js",
+    "scripts": {
+        "start": "node src/app.js",
+        "dev": "nodemon src/app.js",
+        "test": "jest"
+    },
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^16.3.1",
+        "express": "^4.18.2",
+        "express-rate-limit": "^7.1.5",
+        "helmet": "^7.1.0",
+        "joi": "^17.11.0",
+        "morgan": "^1.10.0",
+        "yt-dlp-wrap": "^2.3.12"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0",
+        "nodemon": "^3.0.2",
+        "supertest": "^6.3.3"
+    },
+    "engines": {
+        "node": ">=18.0.0"
+    }
+}
