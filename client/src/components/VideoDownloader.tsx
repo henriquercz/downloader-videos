@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import api from '../services/api';
-import type { VideoMetadata, VideoFormat } from '../types';
+import type { VideoMetadata } from '../types';
 
 const VideoDownloader: React.FC = () => {
     const [url, setUrl] = useState('');
