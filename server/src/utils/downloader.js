@@ -2,9 +2,11 @@ const path = require('path');
 const fs = require('fs');
 const YtDlpWrap = require('yt-dlp-wrap').default;
 
-// Inicializa yt-dlp. Em produção (Docker), ele usará o binário do sistema ou baixará se não encontrar.
-// Para robustez, assumimos que o Dockerfile já instalou python3 e ffmpeg.
-const ytDlp = new YtDlpWrap();
+// Inicializa yt-dlp.
+// No Docker (Linux), ele está em /usr/local/bin/yt-dlp
+// No Windows (Dev), ele deve estar no PATH ou baixado localmente
+const execPath = process.platform === 'linux' ? '/usr/local/bin/yt-dlp' : undefined;
+const ytDlp = new YtDlpWrap(execPath);
 
 const DOWNLOAD_DIR = process.env.DOWNLOAD_DIR
     ? path.resolve(process.env.DOWNLOAD_DIR)
