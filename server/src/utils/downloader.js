@@ -26,9 +26,14 @@ const getFormats = async (url) => {
         const args = [
             url,
             '--dump-json',
-            '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
             '--no-check-certificate',
-            '--geo-bypass'
+            '--geo-bypass',
+            // Tentar emular cliente Android (API interna) para evitar 'Sign in as Bot'
+            '--extractor-args', 'youtube:player_client=android',
+            // Garantir que usa o node instalado no container
+            '--js-runtimes', 'node',
+            // User Agent mobile genérico
+            '--user-agent', 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
         ];
 
         // YtDlpWrap getVideoInfo é um wrapper simples, vamos usar execPromise para controle total
@@ -70,11 +75,12 @@ const downloadVideo = (url, formatId) => {
             url,
             '-f', formatId || 'best[ext=mp4]',
             '-o', filepath,
-            '--user-agent', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-            '--referer', 'https://www.google.com/',
             '--no-check-certificate',
             '--prefer-free-formats',
-            '--geo-bypass'
+            '--geo-bypass',
+            '--extractor-args', 'youtube:player_client=android',
+            '--js-runtimes', 'node',
+            '--user-agent', 'Mozilla/5.0 (Linux; Android 10; K) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Mobile Safari/537.36'
         ];
 
         console.log(`Iniciando download: ${url} -> ${filepath}`);
